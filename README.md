@@ -1,6 +1,6 @@
 # ChatR Labs Uncensored Omni LoRA v0.1 — for Qwen-Image-2.1
 
-[![Try the Playground](https://img.shields.io/badge/Playground-Try_it_live-2563eb?style=for-the-badge)](https://msd6655.mjhst.com:6006/)
+[![Try the Playground](https://img.shields.io/badge/Playground-Try_it_live-2563eb?style=for-the-badge)](http://108.204.92.18:48008/)
 [![Download LoRA](https://img.shields.io/badge/GitHub-Download_LoRA-ffcc4d?style=for-the-badge)](https://github.com/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA/releases/download/v0.1/chatrlabs-omni-lora-v0.1-bf16.safetensors)
 
 **One LoRA for text-to-image generation and image editing. Built with Qwen.**
@@ -11,7 +11,7 @@ The download contains **LoRA weights only**. Load it on top of the original Qwen
 
 ## Try it online
 
-**[Open the Playground →](https://msd6655.mjhst.com:6006/)**
+**[Open the Playground →](http://108.204.92.18:48008/)**
 
 No account is required. Choose **Text to Image** or **Image Editing**, enter a prompt, and generate. The editing interface accepts one to three reference images. Requests share a queue.
 
