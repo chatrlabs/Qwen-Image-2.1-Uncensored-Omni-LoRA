@@ -171,6 +171,12 @@ The training dataset is not included in this release. Checkpoint statistics abov
 
 The adapter and example inference code do not add a prompt filter or output safety checker. The name describes the intended release, rather than a guarantee that every requested concept will be rendered. Results depend on the base model, adapter, prompt, and the application running them.
 
+### Acknowledgements
+
+Training and evaluation compute for Omni v0.1 was generously provided by [Chatr AI](https://thechatr.ai).
+
+Special thanks to the Chatr AI team for supporting this release with GPU infrastructure.
+
 ## Source and license
 
 - **Released by:** [ChatR Labs](https://huggingface.co/chatrlabs)
