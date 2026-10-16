@@ -82,7 +82,7 @@ pipe.set_adapters("omni", adapter_weights=1.0)
 
 # CPU offload reduces GPU residency; it needs sufficient system RAM.
 pipe.enable_model_cpu_offload()
-pipe.vae.enable_tiling()
+# Keep VAE tiling off: tiled decoding adds visible vertical colour streaks.
 # With sufficient VRAM, replace CPU offload with pipe.to("cuda").
 ```
 

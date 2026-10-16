@@ -42,7 +42,7 @@ def main():
         pipe.enable_model_cpu_offload()
     else:
         pipe.to("cuda")
-    pipe.vae.enable_tiling()
+    # Keep VAE tiling off: tiled decoding adds visible vertical colour streaks.
 
     references = []
     for path in args.image:
