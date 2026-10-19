@@ -1,25 +1,25 @@
 # ChatR Labs Uncensored Omni LoRA v0.1 — for Qwen-Image-2.1
 
-[![Try the Playground](https://img.shields.io/badge/Playground-Try_it_live-2563eb?style=for-the-badge)](http://108.204.92.18:48008/)
+[![Try the Playground](https://img.shields.io/badge/Playground-Try_it_live-2563eb?style=for-the-badge)](https://chatrlabs.com/)
 [![Download LoRA](https://img.shields.io/badge/GitHub-Download_LoRA-ffcc4d?style=for-the-badge)](https://github.com/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA/releases/download/v0.1/chatrlabs-omni-lora-v0.1-bf16.safetensors)
 
 **One LoRA for text-to-image generation and image editing. Built with Qwen.**
 
-ChatR Labs Uncensored Omni LoRA v0.1 is an experimental rank-64 adapter fine-tuned from [Qwen/Qwen-Image-2.1](https://huggingface.co/Qwen/Qwen-Image-2.1). Create images from text or transform existing images with natural-language instructions, using one adapter for both workflows.
+ChatR Labs Uncensored Omni LoRA v0.1 is an experimental rank-128 adapter fine-tuned from [Qwen/Qwen-Image-2.1](https://huggingface.co/Qwen/Qwen-Image-2.1). Create images from text or transform existing images with natural-language instructions, using one adapter for both workflows.
 
 The download contains **LoRA weights only**. Load it on top of the original Qwen-Image-2.1 base model; the transformer, text encoder, processor, and VAE are downloaded separately from the base repository.
 
 ## Try it online
 
-**[Open the Playground →](http://108.204.92.18:48008/)**
+**[Open the Playground →](https://chatrlabs.com/)**
 
-No account is required. Choose **Text to Image** or **Image Editing**, enter a prompt, and generate. The editing interface accepts one to three reference images. Requests share a queue.
+No account is required. Choose **Text to Image** or **Image Editing**, enter a prompt, and generate. The editing interface accepts one reference image. Requests share a queue.
 
 ## Download
 
 | File | Format | Size | Use |
 | --- | --- | ---: | --- |
-| [**chatrlabs-omni-lora-v0.1-bf16.safetensors**](https://github.com/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA/releases/download/v0.1/chatrlabs-omni-lora-v0.1-bf16.safetensors) | BF16, Diffusers/PEFT keys | 336 MB | Text-to-image and image editing |
+| [**chatrlabs-omni-lora-v0.1-bf16.safetensors**](https://github.com/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA/releases/download/v0.1/chatrlabs-omni-lora-v0.1-bf16.safetensors) | BF16, Diffusers/PEFT keys | 671 MB | Text-to-image and image editing |
 
 Download the weights from the [v0.1 GitHub Release](https://github.com/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA/releases/tag/v0.1) or the [Hugging Face model repository](https://huggingface.co/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA-v0.1). The Git repository contains documentation and inference code; the weight file is a release attachment.
 
@@ -54,7 +54,7 @@ git checkout v0.1
 pip install -r requirements.txt
 ```
 
-While the repositories are private, GitHub access is required for cloning and release downloads, and Hugging Face access is required when loading the adapter from the Hub. To use the GitHub download locally:
+To use the GitHub download locally:
 
 ```bash
 gh release download v0.1 --repo chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA --pattern '*.safetensors'
@@ -125,7 +125,7 @@ image = pipe(
 image.save("edited.png")
 ```
 
-For multiple references, pass a list of PIL images. The Playground has been exercised with one and three references. More references increase memory requirements.
+For multiple references, pass a list of PIL images. More references increase memory requirements; the Playground accepts one.
 
 A command-line version of these examples is available in [inference.py](./inference.py):
 
@@ -146,24 +146,23 @@ Our Playground uses **two RTX 4090 24 GB GPUs** with the BF16 pipeline split acr
 | --- | --- | ---: |
 | Text to image | 1344 × 768 | 33.2 s |
 | Editing with one reference | 1024 × 1024 | 38.4 s |
-| Editing with three reference inputs | 1024 × 1024 | 50.5 s |
 
-These are individual deployment checks, not comparative quality benchmarks. The three-reference check used the same source image in all three slots. Timing depends on the prompt, input images, hardware, and execution path; the CPU-offload example above does not reproduce this custom GPU split.
+These are individual deployment checks, not comparative quality benchmarks. Timing depends on the prompt, input images, hardware, and execution path; the CPU-offload example above does not reproduce this custom GPU split.
 
 ## Checkpoint details
 
 | Property | Value |
 | --- | --- |
 | Base | Qwen-Image-2.1 |
-| Training checkpoint | Epoch 3, step 9,843 |
-| Training items recorded in checkpoint | 104,933 |
+| Training checkpoint | Step 32,000 (about 1.75 of 8 planned epochs; 18,303 steps per epoch) |
+| Training items recorded in checkpoint | 585,643 |
 | Training resolution | 1024 × 1024, aspect-ratio bucketing enabled |
-| Rank / original alpha | 64 / 64 |
+| Rank / original alpha | 128 / 128 |
 | Adapted modules | 224 modules across 32 transformer blocks |
 | Targets | Attention `to_q`, `to_k`, `to_v`, `to_out.0`; MLP `proj`, `gate_layer`, `out` |
 | Published tensors | 448, BF16 |
 | Training module | `networks.lora_qwen_image_21` |
-| Export | Kohya-style FP32 weights converted to Diffusers/PEFT keys and BF16; alpha/rank folded into `lora_B` |
+| Export | Kohya-style BF16 weights converted to Diffusers/PEFT keys; alpha/rank (1.0) folded into `lora_B` |
 
 The training dataset is not included in this release. Checkpoint statistics above come from the embedded training metadata. We are not publishing an independent quality or content-coverage benchmark with v0.1.
 
@@ -183,7 +182,7 @@ Special thanks to the Chatr AI team for supporting this release with GPU infrast
 - **Base model:** [Qwen/Qwen-Image-2.1](https://huggingface.co/Qwen/Qwen-Image-2.1)
 - **Base revision used in the Playground:** `790c92633540aa0cb11d9abf19eb46d861714758`
 - **Inference:** [Hugging Face Diffusers](https://github.com/huggingface/diffusers), revision `80c7ed262aeffbeb43ef13ae04baeb9b84515a69`
-- **Modification:** ChatR Labs fine-tuned a rank-64 adapter and exported the epoch-3 checkpoint to BF16 Diffusers/PEFT format. This repository distributes the adapter separately from the base model.
+- **Modification:** ChatR Labs fine-tuned a rank-128 adapter and exported the step-32,000 checkpoint to BF16 Diffusers/PEFT format. This repository distributes the adapter separately from the base model.
 - **License:** [Qwen Research License Agreement](./LICENSE), with attribution in [Notice](./Notice). Use is limited to non-commercial research and evaluation unless separately licensed by the upstream rights holder.
 - **Checksums:** [SHA256SUMS](./SHA256SUMS)
 
