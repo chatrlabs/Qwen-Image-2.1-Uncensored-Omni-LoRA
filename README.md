@@ -1,17 +1,17 @@
-# ChatR Labs Uncensored Omni LoRA v0.1 — for Qwen-Image-2.1
+# Chatr Labs Uncensored Omni LoRA v0.1 — for Qwen-Image-2.1
 
-[![Try the Playground](https://img.shields.io/badge/Playground-Try_it_live-2563eb?style=for-the-badge)](https://chatrlabs.com/)
+[![Try the Playground](https://img.shields.io/badge/Playground-Try_it_live-2563eb?style=for-the-badge)](https://chatrlabs.com/playground)
 [![Download LoRA](https://img.shields.io/badge/GitHub-Download_LoRA-ffcc4d?style=for-the-badge)](https://github.com/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA/releases/download/v0.1/chatrlabs-omni-lora-v0.1-bf16.safetensors)
 
 **One LoRA for text-to-image generation and image editing. Built with Qwen.**
 
-ChatR Labs Uncensored Omni LoRA v0.1 is an experimental rank-128 adapter fine-tuned from [Qwen/Qwen-Image-2.1](https://huggingface.co/Qwen/Qwen-Image-2.1). Create images from text or transform existing images with natural-language instructions, using one adapter for both workflows.
+Chatr Labs Uncensored Omni LoRA v0.1 is an experimental rank-128 adapter fine-tuned from [Qwen/Qwen-Image-2.1](https://huggingface.co/Qwen/Qwen-Image-2.1). Create images from text or transform existing images with natural-language instructions, using one adapter for both workflows.
 
 The download contains **LoRA weights only**. Load it on top of the original Qwen-Image-2.1 base model; the transformer, text encoder, processor, and VAE are downloaded separately from the base repository.
 
 ## Try it online
 
-**[Open the Playground →](https://chatrlabs.com/)**
+**[Open the Playground →](https://chatrlabs.com/playground)**
 
 No account is required. Choose **Text to Image** or **Image Editing**, enter a prompt, and generate. The editing interface accepts one reference image. Requests share a queue.
 
@@ -170,7 +170,16 @@ The training dataset is not included in this release. Checkpoint statistics abov
 
 The adapter and example inference code do not add a prompt filter or output safety checker. The name describes the intended release, rather than a guarantee that every requested concept will be rendered. Results depend on the base model, adapter, prompt, and the application running them.
 
-### Acknowledgements
+### Project links
+
+- [Live Playground](https://chatrlabs.com/playground)
+- [Model weights and documentation on Hugging Face](https://huggingface.co/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-LoRA-v0.1)
+- [Chatr Labs website](https://chatrlabs.com)
+- [More Chatr Labs models](https://huggingface.co/chatrlabs/models)
+
+Optimized quantized builds for ComfyUI, Diffusers, and GGUF are in development and will be announced when ready.
+
+## Acknowledgements
 
 Training and evaluation compute for Omni v0.1 was generously provided by [Chatr AI](https://thechatr.ai).
 
@@ -178,12 +187,12 @@ Special thanks to the Chatr AI team for supporting this release with GPU infrast
 
 ## Source and license
 
-- **Released by:** [ChatR Labs](https://huggingface.co/chatrlabs)
+- **Released by:** [Chatr Labs](https://huggingface.co/chatrlabs)
 - **Base model:** [Qwen/Qwen-Image-2.1](https://huggingface.co/Qwen/Qwen-Image-2.1)
 - **Base revision used in the Playground:** `790c92633540aa0cb11d9abf19eb46d861714758`
 - **Inference:** [Hugging Face Diffusers](https://github.com/huggingface/diffusers), revision `80c7ed262aeffbeb43ef13ae04baeb9b84515a69`
-- **Modification:** ChatR Labs fine-tuned a rank-128 adapter and exported the step-32,000 checkpoint to BF16 Diffusers/PEFT format. This repository distributes the adapter separately from the base model.
+- **Modification:** Chatr Labs fine-tuned a rank-128 adapter and exported the step-32,000 checkpoint to BF16 Diffusers/PEFT format. This repository distributes the adapter separately from the base model.
 - **License:** [Qwen Research License Agreement](./LICENSE), with attribution in [Notice](./Notice). Use is limited to non-commercial research and evaluation unless separately licensed by the upstream rights holder.
 - **Checksums:** [SHA256SUMS](./SHA256SUMS)
 
-**Built with Qwen.** This is a community fine-tune by ChatR Labs, independent of the upstream Qwen team.
+**Built with Qwen.** This is a community fine-tune by Chatr Labs, independent of the upstream Qwen team.
