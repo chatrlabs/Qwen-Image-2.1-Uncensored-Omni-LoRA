@@ -136,6 +136,22 @@ python inference.py --lora-file chatrlabs-omni-lora-v0.1-bf16.safetensors --imag
 
 Omit `--lora-file` to download the adapter from its Hugging Face repository instead.
 
+## Benchmark
+
+We compared both public checkpoints from this training run with the original Qwen-Image-2.1 base model, using the same prompts, seed and settings (35 steps, CFG 5.0). This repository is **step 32,000**. Scores are 0–100, higher is better, ± one standard error.
+
+| Benchmark | Base | Step 32,000 (LoRA v0.1) | Step 90,000 (Quantized) |
+|---|---|---|---|
+| Adult prompt adherence (960 images) | 85.1 ± 0.9 | 87.4 ± 0.8 | **89.7 ± 0.7** |
+| Anatomy (960 images) | **70.3 ± 1.4** | 67.7 ± 1.4 | 69.4 ± 1.4 |
+| General SFW prompts (300 PartiPrompts) | **79.8 ± 2.0** | 75.8 ± 2.2 | 79.6 ± 2.0 |
+
+- Prompt adherence on adult content improves with training: +2.3 at step 32,000 and +4.6 at step 90,000 over the base model (both significant).
+- On ordinary SFW prompts, step 32,000 is 4.0 points below the base model; step 90,000 is within noise of it.
+- Neither checkpoint improves anatomy over the base model.
+
+Scores come from AI judges (Qwen3.8-27B for adherence, Gemma 4 31B for anatomy) on a held-out test set that does not overlap the training data. See [BENCHMARK.md](BENCHMARK.md) for per-caption-length and per-category results, the exact judge questions, and limitations.
+
 ## Memory and performance
 
 The small adapter download does not reflect the full base model's memory requirements. Use CPU offload or a suitable multi-GPU setup when the complete BF16 pipeline does not fit on one GPU.
@@ -164,7 +180,7 @@ These are individual deployment checks, not comparative quality benchmarks. Timi
 | Training module | `networks.lora_qwen_image_21` |
 | Export | Kohya-style BF16 weights converted to Diffusers/PEFT keys; alpha/rank (1.0) folded into `lora_B` |
 
-The training dataset is not included in this release. Checkpoint statistics above come from the embedded training metadata. We are not publishing an independent quality or content-coverage benchmark with v0.1.
+The training dataset is not included in this release. Checkpoint statistics above come from the embedded training metadata. See [Benchmark](#benchmark) for quality measurements.
 
 ## About “uncensored”
 
@@ -177,7 +193,7 @@ The adapter and example inference code do not add a prompt filter or output safe
 - [Chatr Labs website](https://chatrlabs.com)
 - [More Chatr Labs models](https://huggingface.co/chatrlabs/models)
 
-Optimized quantized builds for ComfyUI, Diffusers, and GGUF are in development and will be announced when ready.
+Quantized builds of the later step-90,000 checkpoint for ComfyUI, Diffusers, and GGUF are available at [chatrlabs/Qwen-Image-2.1-Uncensored-Omni-Quantized](https://huggingface.co/chatrlabs/Qwen-Image-2.1-Uncensored-Omni-Quantized).
 
 ## Acknowledgements
 
